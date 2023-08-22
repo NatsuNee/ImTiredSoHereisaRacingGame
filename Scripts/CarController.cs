@@ -88,19 +88,23 @@ public class CarController : MonoBehaviour
 
         // Calculate Movement Direction
         //moveInput *= moveInput > 0 ? fwdSpeed : revSpeed;
+
         if (moveInput == 1 & currentSpeed <= maxSpeed) 
         {
             currentSpeed += fwdSpeed;
-            sphereRB.drag = 2.4f;
+            turnSpeed = 80f;
+            sphereRB.drag = 3f;
         }
-        else if (moveInput == -1 & currentSpeed <= maxSpeed)
+        if (moveInput == -1 & currentSpeed >= -20)
         {
             currentSpeed -= revSpeed;
-            sphereRB.drag = 4.3f;
+            turnSpeed = 90f;
+            sphereRB.drag = 3f;
         }
-        else if (moveInput == 0)
+        if (moveInput == 0)
         {
             const double V = 0.9992;
+            turnSpeed = 90f;
             currentSpeed = (float)(currentSpeed * V);
             sphereRB.drag = 3f;
         }
@@ -114,7 +118,7 @@ public class CarController : MonoBehaviour
         if (isCarGrounded)
             sphereRB.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration); // Add Movement
         else
-            sphereRB.AddForce(transform.up * -200f); // Add Gravity
+            sphereRB.AddForce(transform.up * -250f); // Add Gravity
 
         carRB.MoveRotation(transform.rotation);
 

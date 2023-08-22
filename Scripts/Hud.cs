@@ -11,6 +11,6 @@ public class Hud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpeedUi.text = ((int)Vehicle.velocity.magnitude).ToString();
+        SpeedUi.text = (((int)Vehicle.velocity.magnitude)*2).ToString();
     }
 }
