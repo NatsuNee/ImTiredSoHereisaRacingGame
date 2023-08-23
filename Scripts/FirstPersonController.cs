@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -68,6 +69,12 @@ public class FirstPersonController : MonoBehaviour
     private float defaultFOV;
     private Coroutine zoomRoutine;
 
+    private int money;
+
+    // GARBAGE COLLECTED
+
+    private int garbage;
+
     // SLIDING PARAMETERS
 
     private Vector3 hitPointNormal;
@@ -103,6 +110,7 @@ public class FirstPersonController : MonoBehaviour
 
     private PlayerInput input = null;
     Vector2 movementInput;
+
 
     void Awake()
     {
@@ -259,7 +267,7 @@ public class FirstPersonController : MonoBehaviour
     {
         if(Input.GetKeyDown(interactKey) && currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
         {
-            currentInteractable.OnInteract();
+            currentInteractable.OnInteract(gameObject);
         }
     }
 
@@ -303,6 +311,45 @@ public class FirstPersonController : MonoBehaviour
         duringCrouchAnimation = false;
     }
 
+    public void CollectedItem(string item, int amount)
+    {
+        switch (item)
+        {
+            case "garbage":
+                garbage = garbage + amount;
+                print(garbage);
+                break;
+
+            default:
+                Debug.LogError("this item doesn't exist");
+                break;
+        }
+    }
+
+    public void RemoveItem(string item, int amount)
+    {
+        switch (item)
+        {
+            case "garbage":
+                garbage = garbage - amount;
+                print(garbage);
+                break;
+
+            default:
+                Debug.LogError("this item doesn't exist");
+                break;
+        }
+    }
+
+    public void AddMoney(int amount)
+    {
+        money = money + amount;
+    }
+
+    public void RemoveMoney(int amount)
+    {
+        money = money - amount;
+    }
     private IEnumerator ToggleZoom(bool isEnter)
     {
         float targetFOV = isEnter ? zoomFOV : defaultFOV;

@@ -12,7 +12,7 @@ public class TestNpcInteract : Interactable
 
     }
 
-    public override void OnInteract()
+    public override void OnInteract(GameObject gameObj)
     {
         if (!DialogueManager.GetInstance().dialogueIsPlaying)
         {
