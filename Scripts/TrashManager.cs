@@ -13,7 +13,7 @@ public class TrashManager : MonoBehaviour
 
     [SerializeField] private GameObject trashPrefab;
 
-    public void Start()
+    private void Start()  //DELETE OLD TRASH CANS UPON SLEEPING
     {
         spawnalltrash();
     }

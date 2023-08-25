@@ -9,8 +9,8 @@ what could I do for you today man. #speaker:John #portrait:happy
         -> END 
         
     + [I want to sell my garbage.]
-        Got u #speaker:John #portrait:happy #market:selltrash
-        ...
+        Got u #speaker:John #portrait:happy 
+        ... #market:selltrash
         -> END
         
     + [Nothing much.]

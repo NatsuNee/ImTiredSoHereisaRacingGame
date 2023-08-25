@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -30,7 +31,7 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Movement Parameters")]
     [SerializeField] private float walkSpeed = 4.0f;
-    [SerializeField] private float sprintSpeed = 6.0f;
+    [SerializeField] private float sprintSpeed = 8.0f;
     [SerializeField] private float crouchSpeed = 3.0f;
     [SerializeField] private float slopeSpeed = 8f;
 
@@ -69,6 +70,7 @@ public class FirstPersonController : MonoBehaviour
     private float defaultFOV;
     private Coroutine zoomRoutine;
 
+    [SerializeField] private TextMeshProUGUI moneyText;
     private int money;
 
     // GARBAGE COLLECTED
@@ -311,13 +313,27 @@ public class FirstPersonController : MonoBehaviour
         duringCrouchAnimation = false;
     }
 
+    public int ItemGot(string item)
+    {
+        switch (item)
+        {
+            case "garbage":
+                return garbage;
+
+            default:
+                
+                Debug.LogError("this item doesn't exist");
+                return 0;
+
+        }
+    }
+
     public void CollectedItem(string item, int amount)
     {
         switch (item)
         {
             case "garbage":
                 garbage = garbage + amount;
-                print(garbage);
                 break;
 
             default:
@@ -343,13 +359,21 @@ public class FirstPersonController : MonoBehaviour
 
     public void AddMoney(int amount)
     {
-        money = money + amount;
+        money += amount;
+        updateHudElements();
     }
 
     public void RemoveMoney(int amount)
     {
-        money = money - amount;
+        money -= amount;
+        updateHudElements();
     }
+
+    private void updateHudElements()
+    {
+        moneyText.text = ("$" + money);
+    }
+
     private IEnumerator ToggleZoom(bool isEnter)
     {
         float targetFOV = isEnter ? zoomFOV : defaultFOV;

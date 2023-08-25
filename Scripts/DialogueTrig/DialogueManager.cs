@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Animator portraitAnimator;
 
     [SerializeField] private GameObject marketPanel;
+    private bool marketMode = false;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -99,8 +100,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator ExitDialogueMode()
     {
-        yield return new WaitForSeconds(0.8f);
-        
+        yield return new WaitForSeconds(0.3f);
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -109,6 +109,14 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator EnterMarketMode()
     {
         yield return new WaitForSeconds(0.8f);
+        dialoguePanel.SetActive(false);
+        marketPanel.SetActive(true);
+    }
+
+    public void ExitMarketMode()
+    {
+        marketMode = false;
+        ContinueStory();
     }
 
     private void ContinueStory()
@@ -118,6 +126,10 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text = currentStory.Continue();
             DisplayChoices();
             HandleTags(currentStory.currentTags);
+        }
+        else if (marketMode == true) 
+        {
+            return;
         }
         else
         {
@@ -158,7 +170,8 @@ public class DialogueManager : MonoBehaviour
                     break;
 
                 case MARKET_TAG:
-                    marketPanel.SetActive(true);
+                    marketMode = true;
+                    StartCoroutine(EnterMarketMode());
                     break;
 
                 default:
