@@ -11,8 +11,8 @@ public class GarbageInteractable : Interactable
 
     public override void OnInteract(GameObject gameObj)
     {
-        gameObject.SetActive(false);
         gameObj.GetComponent<FirstPersonController>().CollectedItem("garbage", 1);
+        Destroy(gameObject);
     }
 
     public override void OnLoseFocus()

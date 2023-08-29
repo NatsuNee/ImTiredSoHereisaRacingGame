@@ -59,12 +59,28 @@ public class CarController : MonoBehaviour
     void Update()
     {
 
-        //Grab Current Speed from Motor
-        float currentSpeedVar = (((int)carRB.velocity.magnitude));
+        
 
         // Get Input
         moveInput = movementInput.y;
         turnInput = movementInput.x;
+
+        
+
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (isCarGrounded)
+            sphereRB.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration); // Add Movement
+        else
+            sphereRB.AddForce(transform.up * -250f); // Add Gravity
+
+        carRB.MoveRotation(transform.rotation);
+
+        //Grab Current Speed from Motor
+        float currentSpeedVar = (((int)carRB.velocity.magnitude));
 
         // Calculate Turning Rotation
         if (currentSpeedVar != 0)
@@ -89,7 +105,7 @@ public class CarController : MonoBehaviour
         // Calculate Movement Direction
         //moveInput *= moveInput > 0 ? fwdSpeed : revSpeed;
 
-        if (moveInput == 1 & currentSpeed <= maxSpeed) 
+        if (moveInput == 1 & currentSpeed <= maxSpeed)
         {
             currentSpeed += fwdSpeed;
             turnSpeed = 80f;
@@ -111,16 +127,6 @@ public class CarController : MonoBehaviour
 
         // Calculate Drag
         //sphereRB.drag = isCarGrounded ? normalDrag : modifiedDrag;
-    }
-
-    private void FixedUpdate()
-    {
-        if (isCarGrounded)
-            sphereRB.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration); // Add Movement
-        else
-            sphereRB.AddForce(transform.up * -250f); // Add Gravity
-
-        carRB.MoveRotation(transform.rotation);
 
     }
 }

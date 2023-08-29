@@ -19,12 +19,25 @@ public class TrashManager : MonoBehaviour
     }
     public void spawnalltrash()
     {
-        Instantiate(trashPrefab, trashSP.transform.position, Quaternion.identity);
-        Instantiate(trashPrefab, trashSP2.transform.position, Quaternion.identity);
-        Instantiate(trashPrefab, trashSP3.transform.position, Quaternion.identity);
-        Instantiate(trashPrefab, trashSP4.transform.position, Quaternion.identity);
-        Instantiate(trashPrefab, trashSP5.transform.position, Quaternion.identity);
-        Instantiate(trashPrefab, trashSP6.transform.position, Quaternion.identity);
+        var clones = GameObject.FindGameObjectsWithTag("Garbage");
+        foreach (var clone in clones)
+        {
+            Destroy(clone);
+        }
+
+        GameObject Trash = Instantiate(trashPrefab, trashSP.transform.position, Quaternion.identity);
+        GameObject Trash1 = Instantiate(trashPrefab, trashSP2.transform.position, Quaternion.identity);
+        GameObject Trash2 = Instantiate(trashPrefab, trashSP3.transform.position, Quaternion.identity);
+        GameObject Trash3 = Instantiate(trashPrefab, trashSP4.transform.position, Quaternion.identity);
+        GameObject Trash4 = Instantiate(trashPrefab, trashSP5.transform.position, Quaternion.identity);
+        GameObject Trash5 = Instantiate(trashPrefab, trashSP6.transform.position, Quaternion.identity);
+
+        Trash.tag = "Garbage";
+        Trash1.tag = "Garbage";
+        Trash2.tag = "Garbage";
+        Trash3.tag = "Garbage";
+        Trash4.tag = "Garbage";
+        Trash5.tag = "Garbage";
     }
 
 }

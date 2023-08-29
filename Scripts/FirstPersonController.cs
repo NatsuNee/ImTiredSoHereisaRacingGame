@@ -348,7 +348,6 @@ public class FirstPersonController : MonoBehaviour
         {
             case "garbage":
                 garbage = garbage - amount;
-                print(garbage);
                 break;
 
             default:
